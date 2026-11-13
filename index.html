@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Forex Factory - Price Alerts</title>
+  <style>
+    :root{--bg:#0a0f13;--card:#121821;--text:#e9f0f6;--accent:#ffd166}
+    html,body{margin:0;height:100%;font-family:Arial,system-ui,sans-serif;background:var(--bg);color:var(--text)}
+    .wrap{max-width:720px;margin:0 auto;padding:20px}
+    .card{background:var(--card);border-radius:12px;padding:14px;margin:12px 0}
+    input{padding:8px;border-radius:6px;border:1px solid #334}
+    button{padding:8px 12px;border-radius:6px;border:0;background:var(--accent);cursor:pointer}
+    ul{list-style:none;margin:0;padding:0}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Forex Factory - Price Alerts</h1>
+    <div class="card">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+        <input id="pair" placeholder="Pair (e.g., EUR/USD)" />
+        <input id="targetA" placeholder="Target price" />
+        <button id="add">Add</button>
+      </div>
+      <ul id="list"></ul>
+    </div>
+  </div>
+  <script>
+    (function(){
+      const list=document.getElementById('list');
+      const data=[];
+      document.getElementById('add').addEventListener('click',()=>{
+        const p=document.getElementById('pair').value;const t=document.getElementById('targetA').value; if(!p||!t) return;
+        data.push({pair:p,target:t}); render();
+      });
+      function render(){ list.innerHTML=data.map((d,i)=>`<li>${i+1}. ${d.pair} @ ${d.target}</li>`).join('') || '<li>No alerts yet</li>'; }
+      // simulate alerts every 7-12s
+      setInterval(()=>{ if(data.length){ const d=data[Math.floor(Math.random()*data.length)]; alert('Alert: '+d.pair+' reached '+d.target); } },7000);
+    })();
+  </script>
+</body>
+</html>
